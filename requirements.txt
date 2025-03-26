@@ -1,0 +1,16 @@
+asgiref
+Django
+django-cors-headers
+djangorestframework
+djangorestframework-simplejwt
+PyJWT
+pytz
+sqlparse
+psycopg2-binary
+python-dotenv
+moralis
+requests
+django-environ
+dj-database-url
+whitenoise
+gunicorn
