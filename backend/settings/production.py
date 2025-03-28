@@ -13,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 MORALIS_API_KEY = env('MORALIS_API_KEY_PRODUCTION')
 
 # Hardcoded allowed hosts
-ALLOWED_HOSTS = ['portfolio-tracker-api-173r.onrender.com', 'api.iscryptodead.io']
+ALLOWED_HOSTS = ['icd-backend-production-api.onrender.com', 'api.iscryptodead.io']
 
 # Database
 database_url = env('DATABASE_URL')
@@ -42,7 +42,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Hardcoded trusted origins
 CSRF_TRUSTED_ORIGINS = [
-    'https://portfolio-tracker-api-173r.onrender.com',
+    'https://icd-backend-production-api.onrender.com',
     'https://api.iscryptodead.io',
     'https://iscryptodead.io',
     'https://www.iscryptodead.io'
