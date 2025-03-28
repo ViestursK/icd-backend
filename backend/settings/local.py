@@ -1,5 +1,7 @@
 from .base import *
 
+print("LOADING LOCAL SETTINGS")
+
 # Debug mode enabled for local development
 DEBUG = True
 

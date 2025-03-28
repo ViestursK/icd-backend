@@ -1,6 +1,8 @@
 from .base import *
 import dj_database_url
 
+print("LOADING STAGING SETTINGS")
+
 # Debug could be enabled in staging for troubleshooting
 DEBUG = True
 
@@ -11,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 MORALIS_API_KEY = env('MORALIS_API_KEY_DEVELOP')
 
 # Hardcoded allowed hosts
-ALLOWED_HOSTS = ['portfolio-tracker-api-173r.onrender.com']
+ALLOWED_HOSTS = ['icd-backend-develop-api.onrender.com']
 
 # Database
 database_url = env('DATABASE_URL')
@@ -28,14 +30,12 @@ CSRF_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     'https://icd-frontend-five.vercel.app',
-    'http://localhost:3000',
-    'http://localhost:5173'
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 # Hardcoded trusted origins
 CSRF_TRUSTED_ORIGINS = [
-    'https://portfolio-tracker-api-173r.onrender.com',
+    'https://icd-backend-develop-api.onrender.com',
     'https://icd-frontend-five.vercel.app'
 ]
 

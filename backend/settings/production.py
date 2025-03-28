@@ -1,6 +1,8 @@
 from .base import *
 import dj_database_url
 
+print("LOADING PRODUCTION SETTINGS")
+
 # No debug in production
 DEBUG = False
 
