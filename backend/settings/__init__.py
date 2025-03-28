@@ -1,13 +1,11 @@
 import os
 
-# Use the DJANGO_SETTINGS_MODULE environment variable directly
-settings_module = os.environ.get('DJANGO_SETTINGS_MODULE', '')
+# Default to local settings if not specified
+environment = os.environ.get('DJANGO_ENVIRONMENT', 'local')
 
-if 'production' in settings_module:
+if environment == 'production':
     from .production import *
+elif environment == 'staging':
+    from .staging import *
 else:
-    from .development import *
-
-# Add this for debugging
-import sys
-print(f"Using settings module: {settings_module}", file=sys.stderr)
+    from .local import *

@@ -1,9 +1,16 @@
-# base.py (common settings)
 from pathlib import Path
-from datetime import timedelta
 import os
+import environ
+from datetime import timedelta
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent  # Note: one more parent because of settings directory
+# Initialize environ (without any defaults yet)
+env = environ.Env()
+
+# Build paths inside the project
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Load .env file if it exists locally
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # User Model
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -24,9 +31,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this for static file serving
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Make sure this is high in the list
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -54,6 +61,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -61,6 +69,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -70,17 +79,21 @@ REST_FRAMEWORK = {
     ],
 }
 
+# JWT settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# Static files
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Default primary key field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
