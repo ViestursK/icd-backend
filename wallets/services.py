@@ -79,3 +79,143 @@ class MoralisService:
             error_msg = f"Error fetching wallet net worth: {str(e)}"
             logger.exception(error_msg)
             return False, error_msg
+
+    
+    @classmethod
+    def get_wallet_tokens(cls, address, chain):
+        """
+        Fetch token balances for a wallet from Moralis API
+        Returns tuple: (success_bool, data_or_error_message)
+        """
+        try:
+            # Prepare the API call
+            api_url = f"https://deep-index.moralis.io/api/v2.2/{address}/erc20"
+            headers = {
+                'accept': 'application/json',
+                'X-API-Key': settings.MORALIS_API_KEY
+            }
+            
+            # Convert chain name to Moralis chain ID if needed
+            moralis_chain = cls.CHAIN_MAPPING.get(chain.lower(), chain)
+            params = {'chain': moralis_chain}
+            
+            # Make the API call
+            response = requests.get(api_url, headers=headers, params=params)
+            
+            # Handle response
+            if response.status_code == 200:
+                return True, response.json()
+            else:
+                error_msg = f"Moralis API error: {response.status_code}, {response.text}"
+                logger.error(error_msg)
+                return False, error_msg
+                
+        except Exception as e:
+            error_msg = f"Error fetching token balances: {str(e)}"
+            logger.exception(error_msg)
+            return False, error_msg
+    
+    @classmethod
+    def get_wallet_transactions(cls, address, chain, limit=100):
+        """
+        Fetch transaction history for a wallet from Moralis API
+        Returns tuple: (success_bool, data_or_error_message)
+        """
+        try:
+            # Prepare the API call
+            api_url = f"https://deep-index.moralis.io/api/v2.2/{address}"
+            headers = {
+                'accept': 'application/json',
+                'X-API-Key': settings.MORALIS_API_KEY
+            }
+            
+            # Convert chain name to Moralis chain ID if needed
+            moralis_chain = cls.CHAIN_MAPPING.get(chain.lower(), chain)
+            params = {'chain': moralis_chain, 'limit': limit}
+            
+            # Make the API call
+            response = requests.get(api_url, headers=headers, params=params)
+            
+            # Handle response
+            if response.status_code == 200:
+                return True, response.json()
+            else:
+                error_msg = f"Moralis API error: {response.status_code}, {response.text}"
+                logger.error(error_msg)
+                return False, error_msg
+                
+        except Exception as e:
+            error_msg = f"Error fetching transactions: {str(e)}"
+            logger.exception(error_msg)
+            return False, error_msg
+    
+    @classmethod
+    def get_token_transfers(cls, address, chain, token_address=None, limit=100):
+        """
+        Fetch token transfers for a wallet from Moralis API
+        Returns tuple: (success_bool, data_or_error_message)
+        """
+        try:
+            # Prepare the API call
+            api_url = f"https://deep-index.moralis.io/api/v2.2/{address}/erc20/transfers"
+            headers = {
+                'accept': 'application/json',
+                'X-API-Key': settings.MORALIS_API_KEY
+            }
+            
+            # Convert chain name to Moralis chain ID if needed
+            moralis_chain = cls.CHAIN_MAPPING.get(chain.lower(), chain)
+            params = {'chain': moralis_chain, 'limit': limit}
+            
+            if token_address:
+                params['token_addresses'] = token_address
+            
+            # Make the API call
+            response = requests.get(api_url, headers=headers, params=params)
+            
+            # Handle response
+            if response.status_code == 200:
+                return True, response.json()
+            else:
+                error_msg = f"Moralis API error: {response.status_code}, {response.text}"
+                logger.error(error_msg)
+                return False, error_msg
+                
+        except Exception as e:
+            error_msg = f"Error fetching token transfers: {str(e)}"
+            logger.exception(error_msg)
+            return False, error_msg
+    
+    @classmethod
+    def get_defi_positions(cls, address, chain):
+        """
+        Fetch DeFi positions for a wallet from Moralis API (protocols, farming, staking, etc.)
+        Returns tuple: (success_bool, data_or_error_message)
+        """
+        try:
+            # The endpoint may vary depending on what's available in Moralis
+            api_url = f"https://deep-index.moralis.io/api/v2.2/wallets/{address}/positions"
+            headers = {
+                'accept': 'application/json',
+                'X-API-Key': settings.MORALIS_API_KEY
+            }
+            
+            # Convert chain name to Moralis chain ID if needed
+            moralis_chain = cls.CHAIN_MAPPING.get(chain.lower(), chain)
+            params = {'chain': moralis_chain}
+            
+            # Make the API call
+            response = requests.get(api_url, headers=headers, params=params)
+            
+            # Handle response
+            if response.status_code == 200:
+                return True, response.json()
+            else:
+                error_msg = f"Moralis API error: {response.status_code}, {response.text}"
+                logger.error(error_msg)
+                return False, error_msg
+                
+        except Exception as e:
+            error_msg = f"Error fetching DeFi positions: {str(e)}"
+            logger.exception(error_msg)
+            return False, error_msg
